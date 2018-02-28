@@ -383,9 +383,103 @@ def misplacedTiles(board):
             misplace += 1
     return misplace
 
-#heuristics as a list of functions
-heuristics = [manhattanDistance,misplacedTiles]
+"""
+Function: linearConflict
 
+Purpose: Calculate the Manhattan Distance the board, accounting for steps
+         needed to bypass linear conflicts
+
+Arg:
+    board: (list) the board given to calculate Manhattan Distance
+    
+Return:
+    total_moves: (int) The Manhattan Distance, accounting for steps
+    needed to bypass linear conflicts
+    
+Auxiliary Function: linearConflict_per_tile(tiles,i,n)
+Arg: tiles - the puzzle board; i: the position of the tile currently
+     examining; n: dimension of the board
+Return: Manhattan Distance of the individual tile (accounting for
+        linear conflict)
+"""
+def linearConflict(board):
+    n = len(board[0])
+    tiles = flatten(board)
+    total_moves = 0
+    #Sum the manhattanDistance of all the tiles
+    for i in xrange(len(tiles)):
+        total_moves += linearConflict_per_tile(tiles,i,n)
+    return total_moves
+
+def linearConflict_per_tile(tiles,i,n):
+    goalPos = tiles[i]
+    currentPos = i
+    steps = 0
+    #Perform when the tile is not at its place
+    while currentPos != goalPos and tiles!=0:
+        #Shift levels when the current position of the tile is not at the same level
+        if currentPos/n != goalPos/n:
+            if currentPos > goalPos:
+                currentPos -= n
+            else:
+                currentPos += n
+            steps += 1
+        #Move left or right depending on where the tile needs to go
+        else:
+            if currentPos > goalPos:
+                currentPos -= 1
+            else:
+                currentPos += 1
+            steps += 1
+        
+    #inspect conflict
+    currentRow = currentPos/n
+    nextRow = (currentPos+1)/n
+    if currentRow == nextRow and i%n != n-1:
+        currentGoalRow = goalPos/n
+        nextGoalRow = tiles[i+1]/n
+        if currentGoalRow == nextGoalRow and tiles[currentPos] > tiles[currentPos+1]:
+            steps += 2
+    return steps
+
+"""
+Function: nMaxSwap
+
+Purpose: Calculate the number of direct swaps with 0 tile to solve
+         the n-puzzle
+         
+Arg:
+    board: (list) a list-of-list representation of the board
+
+Return:
+    swaps: (int) number of direct swaps needed to solve the given puzzle
+"""
+def nMaxSwap(board):
+    n = len(board[0])
+    tiles = flatten(board)
+    swaps = 0
+    solved = [0 for i in range(len(tiles))]
+    while tiles != range(n**2):
+        zeroPos = tiles.index(0)
+        if zeroPos != 0:
+            swapPos = tiles.index(zeroPos)
+            tiles[zeroPos],tiles[swapPos] = tiles[swapPos],tiles[zeroPos]
+            solved[zeroPos] = 1
+            swaps += 1
+        else:
+            count = 1
+            while solved[count] == 1 or tiles[count] == count:
+                count += 1
+                continue
+            swapPos = count
+            tiles[zeroPos],tiles[swapPos] = tiles[swapPos],tiles[zeroPos]
+            swaps += 1
+    return swaps
+
+#heuristics as a list of functions
+heuristics = [manhattanDistance,misplacedTiles,nMaxSwap,linearConflict]
+
+#Used to compare different heuristics
 def test_heuristic(pset):
     for boards in pset:
         print "Solving this board: {}\n".format(boards)
