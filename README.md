@@ -3,3 +3,6 @@ Coding for Assignment and Pre-class Work of CS152 - Harnessing Artificial Intell
 
 ### Assignment 1 - A-star Search on N-puzzle
 Source file: ```a_star_n_puzzle.py```
+
+### Assignment 2 - DPLL Algorithm (SAT solver)
+Source file: ```dpll.py```
