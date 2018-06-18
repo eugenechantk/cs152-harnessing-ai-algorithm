@@ -8,3 +8,10 @@ Source File: ```a_star_n_puzzle.py```
 ### Assignment 2 - DPLL Algorithm (SAT solver)
 Notebook File: ```CS152 - DPLL Implementation.ipynb```  
 Source File: ```dpll.py```
+
+### Assignment 3 - Restaurant Finder (Expert System built with Prolog)
+Source File: ```RestaurantFinder.py```
+
+### Assignment 4 - Connect Four Solver (Monte Carlo Tree Search and Minimax)
+Notebook File: ```Final Project/Connect Four Solver.ipynb```
+Source File: ```Final Project/GamePlay.py``` (Run that file for the simulated gameplay and DIY gameplay)
