@@ -13,5 +13,5 @@ Source File: ```dpll.py```
 Source File: ```RestaurantFinder.py```
 
 ### Assignment 4 - Connect Four Solver (Monte Carlo Tree Search and Minimax)
-Notebook File: ```Final Project/Connect Four Solver.ipynb```
+Notebook File: ```Final Project/Connect Four Solver.ipynb```   
 Source File: ```Final Project/GamePlay.py``` (Run that file for the simulated gameplay and DIY gameplay)
